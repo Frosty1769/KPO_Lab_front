@@ -1,11 +1,12 @@
 import clsx from 'clsx';
 import {
-	InputHTMLAttributes,
-	ReactNode,
-	RefObject,
+
 	forwardRef,
 	useEffect,
 	useState,
+	type InputHTMLAttributes,
+	type ReactNode,
+	type RefObject,
 } from 'react';
 import Typography from '../Typography';
 
