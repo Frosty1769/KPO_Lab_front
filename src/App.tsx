@@ -21,7 +21,7 @@ function InnerApp() {
   const navigate = useNavigate();
   const path = useLocation().pathname;
 
-  // const [isChecked, setIsChecked] = useState<boolean>(false);
+
 
   const onAuth = (data: AuthOut) => {
     setAuth({
@@ -39,21 +39,10 @@ function InnerApp() {
 
   useEffect(() => {
     Check((resp: ResponseContainer<AuthOut>) => {
-      // setIsChecked(true);
       if (resp.status === 'ok') if (resp.data) onAuth(resp.data);
     });
   }, []);
 
-  // const Layout = () => {
-  // 	return (
-  // 		<>
-  // 			<Header onLogout={onLogout} />
-  // 			<div className='flex w-full min-w-[1280px] flex-1 flex-col overflow-hidden bg-white'>
-  // 				<Outlet />
-  // 			</div>
-  // 		</>
-  // 	);
-  // };
 
   const onLogout = () => {
     Logout(() => {
