@@ -1,18 +1,17 @@
-import { Path } from "../../../../../Projects/DND/dnd-game/src/enums/Path";
-import { getFullPath } from "../../../../../Projects/DND/dnd-game/src/helper";
+import { Path } from "../enums/Path";
 import type { AuthIn, AuthOut } from "../interfaces/Auth";
 import type { ResponseContainer } from "./base";
 import { P, requestDelete, requestGet, requestPost } from "./requester";
 
 export function Login(
-    args: AuthIn,
+	args: AuthIn,
 	callback: (resp: ResponseContainer<AuthOut>) => void
 ) {
 	requestPost<ResponseContainer<AuthOut>>(Path.Login, args, callback);
 }
 
 export function Register(
-    args: AuthIn,
+	args: AuthIn,
 	callback: (resp: ResponseContainer<AuthOut>) => void
 ) {
 	requestPost<ResponseContainer<AuthOut>>(Path.Register, args, callback);
@@ -23,10 +22,10 @@ export function Check(
 ) {
 	const encodedToken = localStorage.getItem('token');
 	requestGet<AuthOut>(
-        Path.Info,
-        callback, 
-        { Authorization: encodedToken }
-        );
+		Path.Info,
+		callback,
+		{ Authorization: encodedToken }
+	);
 }
 
 export function Logout(
