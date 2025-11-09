@@ -6,7 +6,7 @@ type buttonSize = 'big' | 'small' | 'big-icon' | 'small-icon';
 
 const typeClasses = {
 	primary:
-		'!bg-[#a77236] border !border-[#794a15] text-white  enabled:hover:bg-accent-hover disabled:bg-gray-2 disabled:border-gray-2 focus:bg-accent-hover',
+		'bg-[#a77236]! border border-[#794a15]! text-white  enabled:hover:bg-accent-hover disabled:bg-gray-2 disabled:border-gray-2 focus:bg-accent-hover',
 	secondary:
 		'text-accent bg-gray-1 border-gray-1 enabled:hover:bg-gray-2 disabled:text-gray-3 focus:bg-gray-2',
 	tetriary:
@@ -17,7 +17,7 @@ const typeClasses = {
 };
 
 const sizeClasses = {
-	big: 'px-6 h-12',
+	big: 'px-6 h-16',
 	small: 'px-4 h-9',
 	'big-icon': 'w-12 h-12',
 	'small-icon': 'w-9 h-9',
@@ -39,8 +39,8 @@ const Button = forwardRef<HTMLButtonElement, Props>(
 			<button
 				ref={ref}
 				className={clsx(
-					'!bg-accent border !border-accent-hover flex cursor-pointer items-center justify-center gap-1 whitespace-nowrap rounded-lg text-center text-sm font-semibold',
-					'overflow-ellipsis outline-none transition-all disabled:cursor-default',
+					'bg-accent border border-accent-hover flex cursor-pointer items-center justify-center gap-1 whitespace-nowrap rounded-2xl text-center text-sm font-semibold',
+					'text-ellipsis outline-none transition-all disabled:cursor-default',
 					sizeClasses[size],
 					typeClasses[variant],
 					className

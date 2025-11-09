@@ -14,8 +14,8 @@ type inputSize = 'big' | 'small';
 type iconAnchor = 'left' | 'right';
 
 const sizeClasses = {
-	big: 'h-[2rem]',
-	small: 'h-9',
+	big: 'h-16',
+	small: 'h-12',
 };
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
@@ -83,7 +83,7 @@ const TextBox = forwardRef<HTMLDivElement, Props>(
 						type={props.type}
 						ref={props.inputref}
 						className={clsx(
-							'w-full rounded-lg border !bg-[#d1ba96b0] border-accent-hover px-3 text-sm outline-none disabled:bg-gray-1 disabled:text-gray-3',
+							'w-full rounded-lg border bg-[#d1ba96b0]! border-accent-hover px-3 text-sm outline-none disabled:bg-gray-1 disabled:text-gray-3',
 							sizeClasses[inputSize],
 							error && 'border-system-red',
 							icon && (iconAnchor === 'left' ? 'pl-10' : 'pr-10'),

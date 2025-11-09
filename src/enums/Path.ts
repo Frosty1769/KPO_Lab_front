@@ -1,5 +1,10 @@
 export enum Path {
     Auth = '/auth',
+    Admin = '/admin',
+
+    Checkout = '/checkout',
+    Stash = '/stash',
+
     Home = '/home',
     Master = '/master',
     Player = '/player',

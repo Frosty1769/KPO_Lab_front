@@ -10,9 +10,9 @@ import SearchBox from './SearchBox';
 type selectSize = 'big' | 'small' | 'xs';
 
 const sizeClasses = {
-	big: 'px-3 min-h-[2rem]',
-	small: 'px-3 min-h-[2.25rem]',
-	xs: 'px-1.5 min-h-[1.75rem]',
+	big: 'px-3 min-h-8',
+	small: 'px-3 min-h-9',
+	xs: 'px-1.5 min-h-7',
 };
 
 interface Props<T> {
@@ -90,14 +90,14 @@ const Select = <T extends object>({ size = 'big', ...props }: Props<T>) => {
 				)}
 				<SelectBase.Trigger
 					className={clsx(
-						'flex !bg-[#d1ba96b0] w-full items-center justify-between gap-1 rounded-lg border border-gray-2 text-sm outline-none',
+						'flex bg-[#d1ba96b0]! w-full items-center justify-between gap-1 rounded-lg border border-gray-2 text-sm outline-none',
 						'disabled:bg-gray-1 data-[placeholder]:text-gray-3',
 						sizeClasses[size],
 						props.styleClasses?.trigger,
 						props.error && '!border-system-red'
 					)}
 				>
-					<span className='flex items-center gap-1 font-bold [&>*]:text-left'>
+					<span className='flex items-center gap-1 font-bold *:text-left'>
 						{props.preTextIcon}
 						<SelectBase.Value placeholder={props.placeholder} />
 					</span>
@@ -135,7 +135,7 @@ const Select = <T extends object>({ size = 'big', ...props }: Props<T>) => {
 					position='popper'
 					className={clsx(
 						'my-2 rounded-lg bg-white py-1 text-sm shadow-1',
-						'w-[--radix-select-trigger-width]',
+						'w-(--radix-select-trigger-width)',
 						props.styleClasses?.list
 					)}
 				>

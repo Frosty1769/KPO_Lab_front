@@ -1,12 +1,12 @@
 import clsx from 'clsx';
-import {  forwardRef, type ReactNode } from 'react';
+import { forwardRef, type ReactNode } from 'react';
 
 type hSize = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
 const sizeClasses = {
-	h1: 'text-[32px]',
-	h2: 'text-2xl',
-	h3: 'text-[18px]',
+	h1: 'text-[24px]',
+	h2: 'text-[18px]',
+	h3: 'text-[14px]',
 	h4: 'text-base',
 	h5: 'text-sm',
 	h6: 'text-xs',

@@ -1,13 +1,31 @@
 @import "tailwindcss";
 
+@theme {
+  --color-*: initial;
+  --color-transparent: transparent;
+  --color-blackout: rgba(13, 13, 13, 0.3);
 
-@font-face {
-	font-family: 'Inkulinati'; 
-	src: url(/src/assets/Inkulinati-Regular.otf); 
-	/* src: url(/src/assets/TanaUncialSP.otf);  */
+  --color-accent: #a77236;
+  --color-accent-hover: #794a15;
+  --color-accent-transparent: rgba(00, 172, 134, 0.1);
+
+  --color-backround-primary: #a77236;
+  --color-backround-secondary: #f1cfb2;
+
+  --color-system-red: #DF5049;
+  --color-system-red-hover: #ED4938;
 }
 
-@layer base {
+
+@font-face {
+  font-family: 'Inkulinati';
+  src: url(/src/assets/Inkulinati-Regular.otf);
+  /* src: url(/src/assets/TanaUncialSP.otf);  */
+}
+
+/* @layer base {
+  
+
   input[type="number"]::-webkit-outer-spin-button,
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"] {
@@ -24,7 +42,7 @@
 * {
   font-family: "Inkulinati" sans-serif;
   box-sizing: border-box;
-}
+} */
 
 /* .Toastify {
   position: absolute;
@@ -32,9 +50,3 @@
   height: 100%;
   z-index: -1;
 } */
-
-
-html, body {
-  margin: 0;
-  padding: 0;
-}
