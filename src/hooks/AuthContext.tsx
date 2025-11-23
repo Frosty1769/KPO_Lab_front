@@ -1,10 +1,9 @@
 import React, { createContext, useContext, useMemo, useState } from 'react';
-import Role from '../enums/Role';
 
 interface IAuth {
-	id: string | null;
+	id: number | null;
 	name: string | null;
-	role: Role | null;
+	role: 'admin' | 'cashier' | null;
 	isAdmin: boolean;
 }
 

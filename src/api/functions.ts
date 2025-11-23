@@ -1,7 +1,10 @@
 import { Path } from "../enums/Path";
-import type { AuthIn, AuthOut } from "../interfaces/Auth";
+import type { AuthIn, AuthOut, UserRegister } from "../interfaces/Auth";
+import type { Product, ProductAdd, SaleRequest, SaleResponse } from "../interfaces/Product";
 import type { ResponseContainer } from "./base";
-import { P, requestDelete, requestGet, requestPost } from "./requester";
+import { requestDelete, requestGet, requestPost } from "./requester";
+
+// ==================== User API ====================
 
 export function Login(
 	args: AuthIn,
@@ -11,26 +14,70 @@ export function Login(
 }
 
 export function Register(
-	args: AuthIn,
-	callback: (resp: ResponseContainer<AuthOut>) => void
+	args: UserRegister,
+	callback: (resp: ResponseContainer<null>) => void
 ) {
-	requestPost<ResponseContainer<AuthOut>>(Path.Register, args, callback);
+	requestPost<ResponseContainer<null>>(Path.Register, args, callback);
 }
 
 export function Check(
 	callback: (resp: ResponseContainer<AuthOut>) => void
 ) {
-	const encodedToken = localStorage.getItem('token');
-	requestGet<AuthOut>(
-		Path.Info,
-		callback,
-		{ Authorization: encodedToken }
-	);
+	requestGet<AuthOut>(Path.Info, callback);
 }
 
 export function Logout(
-	callback: (resp: ResponseContainer<AuthOut>) => void
+	callback: (resp: ResponseContainer<null>) => void
 ) {
-	requestPost<AuthOut>(Path.Logout, {}, callback);
+	requestPost<null>(Path.Logout, {}, callback);
+}
+
+export function GetUsers(
+	callback: (resp: ResponseContainer<AuthOut[]>) => void
+) {
+	requestGet<AuthOut[]>(Path.UserList, callback);
+}
+
+export function DeleteUser(
+	userId: number,
+	callback: (resp: ResponseContainer<null>) => void
+) {
+	requestDelete<null>(Path.UserDelete + userId, callback);
+}
+
+// ==================== Products API ====================
+
+export function AddProduct(
+	args: ProductAdd,
+	callback: (resp: ResponseContainer<Product>) => void
+) {
+	requestPost<ResponseContainer<Product>>(Path.ProductAdd, args, callback);
+}
+
+export function GetProducts(
+	callback: (resp: ResponseContainer<Product[]>) => void
+) {
+	requestGet<Product[]>(Path.ProductList, callback);
+}
+
+export function GetProductByArticle(
+	article: string,
+	callback: (resp: ResponseContainer<Product>) => void
+) {
+	requestGet<Product>(`${Path.ProductByArticle}${article}`, callback);
+}
+
+export function DeleteProduct(
+	article: string,
+	callback: (resp: ResponseContainer<null>) => void
+) {
+	requestDelete<null>(`${Path.ProductDelete}${article}`, callback);
+}
+
+export function ProcessSale(
+	args: SaleRequest,
+	callback: (resp: ResponseContainer<SaleResponse>) => void
+) {
+	requestPost<ResponseContainer<SaleResponse>>(Path.Sale, args, callback);
 }
 

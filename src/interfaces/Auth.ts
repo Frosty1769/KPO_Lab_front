@@ -1,12 +1,17 @@
-import Role from "../enums/Role";
-
-export interface AuthOut{
-	id: string | null;
-	name: string | null;
-	role: Role | null;
-	isAdmin: boolean;
+export interface AuthOut {
+    id: number;
+    username: string;
+    role: 'admin' | 'cashier';
+    isAdmin: boolean;
 }
-export interface AuthIn{
-    username: string,
-    password: string
+
+export interface AuthIn {
+    username: string;
+    password: string;
+}
+
+export interface UserRegister {
+    username: string;
+    password: string;
+    role?: 'admin' | 'cashier';
 }

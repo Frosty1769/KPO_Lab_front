@@ -1,20 +1,21 @@
 export enum Path {
-    Auth = '/auth',
+    // Страницы
+    Auth = '/',
+    Cashier = '/cashier',
     Admin = '/admin',
 
-    Checkout = '/checkout',
-    Stash = '/stash',
+    // API User
+    Info = '/api/user/info',
+    Login = '/api/user/login',
+    Register = '/api/user/register',
+    Logout = '/api/user/logout',
+    UserList = '/api/user/list',
+    UserDelete = '/api/user/delete/',
 
-    Home = '/home',
-    Master = '/master',
-    Player = '/player',
-    Character = '/character/:id',
-    Info = '/info',
-    Login = '/login',
-    Register = '/register',
-    Logout = '/logout',
-    Weapons = '/weapons',
-    Spells = '/spells',
-
-    Add = 'add',
+    // API Products
+    ProductAdd = '/api/products/add',
+    ProductList = '/api/products/list',
+    ProductByArticle = '/api/products/article/',
+    ProductDelete = '/api/products/delete/',
+    Sale = '/api/products/sale',
 }

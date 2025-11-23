@@ -24,7 +24,8 @@ export async function requestGet<R>(
 			callback(response.data as ResponseContainer<R>);
 		})
 		.catch(function (error) {
-			callback({ status: 'error', message: error } as ResponseContainer<R>);
+			const errorMsg = error.response?.data?.message || error.message || 'Ошибка соединения с сервером';
+			callback({ status: 'error', message: errorMsg } as ResponseContainer<R>);
 		});
 }
 
@@ -40,7 +41,8 @@ export async function requestPost<R>(
 			callback(response.data as ResponseContainer<R>);
 		})
 		.catch(function (error) {
-			callback({ status: 'error', message: error } as ResponseContainer<R>);
+			const errorMsg = error.response?.data?.message || error.message || 'Ошибка соединения с сервером';
+			callback({ status: 'error', message: errorMsg } as ResponseContainer<R>);
 		});
 }
 
@@ -74,7 +76,8 @@ export async function requestPut<R>(
 			callback(response.data as ResponseContainer<R>);
 		})
 		.catch(function (error) {
-			callback({ status: 'error', message: error } as ResponseContainer<R>);
+			const errorMsg = error.response?.data?.message || error.message || 'Ошибка соединения с сервером';
+			callback({ status: 'error', message: errorMsg } as ResponseContainer<R>);
 		});
 }
 
@@ -85,6 +88,7 @@ export async function requestDelete<R>(url: string, callback?: any) {
 			callback(response.data as ResponseContainer<R>);
 		})
 		.catch(function (error) {
-			callback({ status: 'error', message: error } as ResponseContainer<R>);
+			const errorMsg = error.response?.data?.message || error.message || 'Ошибка соединения с сервером';
+			callback({ status: 'error', message: errorMsg } as ResponseContainer<R>);
 		});
 }
