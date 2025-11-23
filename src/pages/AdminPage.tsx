@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { GetProducts, AddProduct, DeleteProduct, Register, Logout, GetUsers, DeleteUser } from "../api/functions";
-import type { Product, ProductAdd } from "../interfaces/Product";
+import { GetProducts, AddProduct, DeleteProduct, Register, Logout, GetUsers, DeleteUser, GetSalesReport, ClearSalesHistory } from "../api/functions";
+import type { Product, ProductAdd, SalesReport } from "../interfaces/Product";
 import type { UserRegister, AuthOut } from "../interfaces/Auth";
 import { toast } from "react-toastify";
 import Typography from "../Typography";
@@ -117,25 +117,48 @@ const AdminPage = (props: Props) => {
     };
 
     const exportReport = () => {
-        // Экспорт товарных остатков в CSV с UTF-8 BOM для Excel
-        const csvHeader = "\ufeffАртикул,Название,Цена,Количество\n";
-        const csvRows = products.map(p => 
-            `${p.article},${p.name},${p.price},${p.quantity}`
-        ).join("\n");
-        
-        const csvContent = csvHeader + csvRows;
-        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement("a");
-        const url = URL.createObjectURL(blob);
-        
-        link.setAttribute("href", url);
-        link.setAttribute("download", `report_${new Date().toISOString().split('T')[0]}.csv`);
-        link.style.visibility = 'hidden';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        
-        toast.success("Отчёт экспортирован");
+        // Получаем отчёт о продажах с сервера и экспортируем в CSV
+        GetSalesReport((res) => {
+            if (res.status === 'ok' && res.data) {
+                const report = res.data;
+                
+                const csvHeader = "\ufeffАртикул,Название,Общее количество продаж,Общая выручка\n";
+                const csvRows = report.sales.map(s => 
+                    `${s.article},${s.name},${s.total_quantity},${s.total_revenue.toFixed(2)}`
+                ).join("\n");
+                const csvFooter = `\n\nОБЩАЯ ВЫРУЧКА,,,${report.total_revenue.toFixed(2)}`;
+                
+                const csvContent = csvHeader + csvRows + csvFooter;
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement("a");
+                const url = URL.createObjectURL(blob);
+                
+                link.setAttribute("href", url);
+                link.setAttribute("download", `sales_report_${new Date().toISOString().split('T')[0]}.csv`);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                toast.success("Отчёт экспортирован");
+            } else {
+                toast.error(res.message || "Ошибка при получении отчёта");
+            }
+        });
+    };
+
+    const clearSalesReport = () => {
+        if (!confirm("Вы уверены что хотите очистить всю историю продаж? Это действие необратимо!")) {
+            return;
+        }
+
+        ClearSalesHistory((res) => {
+            if (res.status === 'ok') {
+                toast.success("История продаж очищена");
+            } else {
+                toast.error(res.message || "Ошибка при очистке");
+            }
+        });
     };
 
     const handleLogout = () => {
@@ -171,7 +194,10 @@ const AdminPage = (props: Props) => {
                         <Typography size='h5'>+ Добавить кассира</Typography>
                     </Button>
                     <Button onClick={exportReport} className='bg-green-600 hover:bg-green-700'>
-                        <Typography size='h5'>📊 Отчёт</Typography>
+                        <Typography size='h5'>📊 Экспорт отчёта</Typography>
+                    </Button>
+                    <Button onClick={clearSalesReport} className='bg-red-600 hover:bg-red-700'>
+                        <Typography size='h5'>🗑️ Обнулить продажи</Typography>
                     </Button>
                 </div>
 

@@ -18,4 +18,6 @@ export enum Path {
     ProductByArticle = '/api/products/article/',
     ProductDelete = '/api/products/delete/',
     Sale = '/api/products/sale',
+    SalesReport = '/api/products/sales-report',
+    ClearSales = '/api/products/clear-sales',
 }

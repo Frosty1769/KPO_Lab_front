@@ -41,3 +41,15 @@ export interface SaleResponse {
     }[];
     total_price: number;
 }
+
+export interface SalesReportItem {
+    article: string;
+    name: string;
+    total_quantity: number;
+    total_revenue: number;
+}
+
+export interface SalesReport {
+    sales: SalesReportItem[];
+    total_revenue: number;
+}

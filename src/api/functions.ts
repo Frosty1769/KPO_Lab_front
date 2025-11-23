@@ -1,6 +1,6 @@
 import { Path } from "../enums/Path";
 import type { AuthIn, AuthOut, UserRegister } from "../interfaces/Auth";
-import type { Product, ProductAdd, SaleRequest, SaleResponse } from "../interfaces/Product";
+import type { Product, ProductAdd, SaleRequest, SaleResponse, SalesReport } from "../interfaces/Product";
 import type { ResponseContainer } from "./base";
 import { requestDelete, requestGet, requestPost } from "./requester";
 
@@ -79,5 +79,17 @@ export function ProcessSale(
 	callback: (resp: ResponseContainer<SaleResponse>) => void
 ) {
 	requestPost<ResponseContainer<SaleResponse>>(Path.Sale, args, callback);
+}
+
+export function GetSalesReport(
+	callback: (resp: ResponseContainer<SalesReport>) => void
+) {
+	requestGet<SalesReport>(Path.SalesReport, callback);
+}
+
+export function ClearSalesHistory(
+	callback: (resp: ResponseContainer<null>) => void
+) {
+	requestPost<null>(Path.ClearSales, {}, callback);
 }
 
