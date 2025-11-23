@@ -1,0 +1,150 @@
+@startuml Кассовая система - Use Case Diagram
+
+' Настройки стиля
+skinparam actorStyle awesome
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam backgroundColor #FEFEFE
+skinparam defaultFontSize 12
+
+' Определение границы системы
+rectangle "Кассовая система" {
+  
+  ' Модуль аутентификации
+  package "Аутентификация" #LightBlue {
+    usecase UC001 as "Авторизация
+    в системе
+    --
+    UC-001"
+    
+    usecase UC007 as "Выход
+    из системы
+    --
+    UC-007"
+  }
+  
+  ' Модуль управления товарами
+  package "Управление товарами" #LightGreen {
+    usecase UC002 as "Управление
+    товарами
+    --
+    UC-002"
+    
+    usecase UC002_ADD as "Добавление
+    товара"
+    
+    usecase UC002_DEL as "Удаление
+    товара"
+  }
+  
+  ' Модуль управления пользователями
+  package "Управление пользователями" #LightYellow {
+    usecase UC003 as "Управление
+    пользователями
+    --
+    UC-003"
+    
+    usecase UC003_REG as "Регистрация
+    пользователя"
+    
+    usecase UC003_DEL as "Удаление
+    пользователя"
+  }
+  
+  ' Модуль продаж
+  package "Продажи" #LightCyan {
+    usecase UC004 as "Проведение
+    продажи
+    --
+    UC-004"
+    
+    usecase UC004_SEARCH as "Поиск товара
+    по артикулу"
+    
+    usecase UC004_CART as "Управление
+    корзиной"
+    
+    usecase UC004_PAY as "Оплата"
+  }
+  
+  ' Модуль отчётности
+  package "Отчётность" #LightPink {
+    usecase UC005 as "Просмотр и экспорт
+    отчёта о продажах
+    --
+    UC-005"
+    
+    usecase UC006 as "Очистка истории
+    продаж
+    --
+    UC-006"
+  }
+  
+}
+
+' Определение актёров
+:Администратор: as Admin
+:Кассир: as Cashier
+
+' Связи Администратора
+Admin --> UC001
+Admin --> UC007
+Admin --> UC002
+Admin --> UC003
+Admin --> UC004
+Admin --> UC005
+Admin --> UC006
+
+' Связи Кассира
+Cashier --> UC001
+Cashier --> UC007
+Cashier --> UC004
+
+' Include связи для UC002
+UC002 .> UC002_ADD : <<include>>
+UC002 .> UC002_DEL : <<include>>
+
+' Include связи для UC003
+UC003 .> UC003_REG : <<include>>
+UC003 .> UC003_DEL : <<include>>
+
+' Include связи для UC004
+UC004 .> UC004_SEARCH : <<include>>
+UC004 .> UC004_CART : <<include>>
+UC004 .> UC004_PAY : <<include>>
+
+' Extend связи
+UC003_DEL ..> UC003_DEL : <<extend>>\n{Попытка удалить\nсамого себя}
+UC004_PAY ..> UC004_PAY : <<extend>>\n{Недостаточно\nтовара}
+
+' Заметки
+note right of Admin
+  Полный доступ
+  к системе
+end note
+
+note right of Cashier
+  Только проведение
+  продаж
+end note
+
+note bottom of UC002
+  Требует роль Admin.
+  Использует транзакции
+  SERIALIZABLE
+end note
+
+note bottom of UC004
+  Использует блокировку
+  строк (with_for_update)
+  для предотвращения
+  race conditions
+end note
+
+note bottom of UC005
+  Экспорт в CSV с UTF-8 BOM.
+  Агрегация по артикулу:
+  SUM(quantity), SUM(revenue)
+end note
+
+@enduml
